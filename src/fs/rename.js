@@ -1,13 +1,7 @@
-/*
-rename.js - implement function that renames file wrongFilename.txt to properFilename with extension .md
-(if there's no file wrongFilename.txt or properFilename.md already exists Error with message FS operation failed must be thrown)
-*/
-
 import { access, constants, rename as changeName } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join, dirname } from 'node:path';
 
-import { debugMsg, usersError } from '../debugMsgs.js';
+import { debugMsg, usersError } from '../userUtlis.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const sourceDirURL = join(__dirname, 'files');

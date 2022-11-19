@@ -1,3 +1,7 @@
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// set debugMsgOn to true, if error describtions require
 const debugMsgOn = true;
 
 const colors = {
