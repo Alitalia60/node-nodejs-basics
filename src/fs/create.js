@@ -1,33 +1,23 @@
-import { stat, writeFile } from 'node:fs/promises';
+import { access, constants, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import usersError from '../usersError.js';
+import { debugMsg, usersError } from '../debugMsgs.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const fileName = 'fresh.txt';
-const targetFolder = 'files';
-const fileURI = join(__dirname, targetFolder, fileName);
+const targetDirURL = join(__dirname, 'files');
+const fileURI = join(targetDirURL, 'fresh.txt');
 
 const create = async () => {
-  let codeError = '';
-  try {
-    const stats = await stat(join(__dirname, targetFolder));
-    if (!stats.isDirectory()) {
-      codeError = 'NDIR';
-    }
-  } catch (error) {
-    usersError('NEXIST');
-  }
-  if (!codeError) {
-    try {
-      await writeFile(fileURI, 'I am fresh and young', { flag: 'wx' });
-    } catch (error) {
-      usersError('EXIST');
-    }
-  } else {
-    usersError(codeError);
-  }
+  await access(targetDirURL, constants.W_OK).catch((err) =>
+    usersError(' Access target dir error')
+  );
+
+  await writeFile(fileURI, 'I am fresh and young', { flag: 'wx' })
+    .then(() => debugMsg(' Write file success'))
+    .catch((err) => {
+      usersError(' Attemp write file error');
+    });
 };
 
 await create();
