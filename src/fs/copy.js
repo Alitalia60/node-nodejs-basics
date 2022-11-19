@@ -26,6 +26,7 @@ const copy = async () => {
   } catch (err) {
     usersError(' Error copying files');
   }
+  debugMsg(' Copy files success');
 };
 
 copy();
