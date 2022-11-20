@@ -11,6 +11,7 @@ const read = async () => {
   try {
     const text = await readFile(targetFileURL, { encoding: 'utf8' });
     console.log(text);
+    debugMsg('File read success');
   } catch (error) {
     usersError(' Error reading file');
   }
