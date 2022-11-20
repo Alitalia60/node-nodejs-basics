@@ -3,14 +3,14 @@ const parseEnv = () => {
   let outputText = '';
   const arrayKeysOfEnvVar = Object.keys(process.env);
 
-  const arrayKeysWithRSS_ = arrayKeysOfEnvVar.filter((el) =>
-    el.startsWith('RSS_')
+  const arrayKeysWithRSS_ = arrayKeysOfEnvVar.filter((key) =>
+    key.startsWith('RSS_')
   );
 
   arrayKeysWithRSS_.forEach(
-    (el) =>
-      (outputText += `${el}=${process.env[el]}${
-        arrayKeysWithRSS_[arrayKeysWithRSS_.length - 1] === el ? '' : '; '
+    (key) =>
+      (outputText += `${key}=${process.env[key]}${
+        arrayKeysWithRSS_[arrayKeysWithRSS_.length - 1] === key ? '' : '; '
       }`)
   );
   console.log(outputText);
