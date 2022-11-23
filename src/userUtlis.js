@@ -8,9 +8,11 @@ const colors = {
 };
 
 export function usersError(msg) {
-  throw new Error(
-    `${colors.red} FS operation faled${debugMsgOn ? '.' + msg : '.'}`
-  );
+  if (msg && debugMsgOn) {
+    // if (msg) {
+    throw new Error(`${colors.red} FS operation faled. ${msg}.`);
+  }
+  throw new Error(`${colors.red} FS operation faled.`);
 }
 
 export function debugMsg(msg) {
