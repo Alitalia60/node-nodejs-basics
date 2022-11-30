@@ -1,21 +1,23 @@
-import { cpus } from 'node:os';
 import { Worker, isMainThread } from 'node:worker_threads';
-import { dirname, join } from 'node:path';
+import { cpus, userInfo } from 'node:os';
 import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+import { usersError } from '../userUtlis.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-console.log(__dirname);
-const cpusCounter = cpus().length;
+const workerURL = join(__dirname, './worker.js');
 
 const performCalculations = async () => {
-  // Write your code here
-
-  if (isMainThread) {
+  const arrResult = [];
+  const arrPromises = [];
+  for (let index = 0; index < cpus().length; index++) {
+    const work = new Worker(workerURL, { workerData: 10 + index });
+    work.on('message', (mes) => {
+      arrResult.push(mes);
+    });
   }
-  for (let index = 0; index < cpusCounter; index++) {
-    // run worker;
-    const worker = new Worker(join(__dirname, 'worker.js'));
-  }
+  console.log(arrResult);
 };
 
 await performCalculations();
