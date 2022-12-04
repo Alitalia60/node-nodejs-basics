@@ -1,7 +1,7 @@
 import { Worker, isMainThread } from 'node:worker_threads';
-import { cpus, userInfo } from 'node:os';
+import { cpus } from 'node:os';
 import { fileURLToPath } from 'node:url';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join } from 'node:path';
 
 import { usersError } from '../userUtlis.js';
 
